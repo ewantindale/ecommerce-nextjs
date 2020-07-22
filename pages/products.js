@@ -2,7 +2,15 @@ import Head from "next/head";
 import dbConnect from "../utils/dbConnect";
 import Product from "../models/Product";
 import Layout from "../components/Layout";
-import { Card, Header, Image, Button, Label, Grid } from "semantic-ui-react";
+import {
+  Card,
+  Header,
+  Image,
+  Button,
+  Label,
+  Grid,
+  Icon,
+} from "semantic-ui-react";
 
 function Products({ products }) {
   return (
@@ -14,25 +22,48 @@ function Products({ products }) {
 
       <Header size="huge">Products</Header>
       <Grid stackable columns={4}>
-        {products.map((product) => (
-          <Grid.Column key={product._id}>
-            <Card>
-              <Image src="/image.png" />
-              <Card.Content>
-                <Card.Header>{product.name}</Card.Header>
-                <Card.Description>{product.description}</Card.Description>
-              </Card.Content>
-              <Card.Content extra>
-                <Label basic size="large">
-                  {product.stock} in stock
-                </Label>
-                <Button positive floated="right" size="small">
-                  Add to Cart
-                </Button>
-              </Card.Content>
-            </Card>
-          </Grid.Column>
-        ))}
+        {!products || products.length < 1 ? (
+          <p>No products to display</p>
+        ) : (
+          products.map((product) => (
+            <Grid.Column key={product._id}>
+              <Card>
+                <Image src={product.image} />
+                <Card.Content>
+                  <Card.Header>{product.name}</Card.Header>
+                  <Card.Description>{product.description}</Card.Description>
+                </Card.Content>
+                <Card.Content textAlign="center">
+                  <Label
+                    basic
+                    size="large"
+                    color={product.stock > 0 ? "green" : "red"}
+                  >
+                    {product.stock > 0
+                      ? product.stock + " in stock"
+                      : "Out of stock"}
+                  </Label>
+                </Card.Content>
+                <Card.Content extra textAlign="center">
+                  <Button
+                    as="div"
+                    labelPosition="left"
+                    onClick={() => alert("add to cart button clicked")}
+                  >
+                    <Label basic pointing="right">
+                      <Icon name="pound" />
+                      {product.price}
+                    </Label>
+                    <Button primary>
+                      <Icon name="cart" />
+                      Add to Cart
+                    </Button>
+                  </Button>
+                </Card.Content>
+              </Card>
+            </Grid.Column>
+          ))
+        )}
       </Grid>
     </Layout>
   );

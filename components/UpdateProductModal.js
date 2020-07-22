@@ -1,10 +1,18 @@
 import { useState, useEffect } from "react";
-import { Form, Button, Modal, Message } from "semantic-ui-react";
+import {
+  Form,
+  Button,
+  Modal,
+  Message,
+  Image,
+  Segment,
+} from "semantic-ui-react";
 
 export default function UpdateProductModal({ product, updateProduct }) {
   const [open, setOpen] = useState(false);
   const [errorMsg, setErrorMsg] = useState(null);
   const [form, setForm] = useState({
+    image: product.image,
     name: product.name,
     description: product.description,
     stock: product.stock,
@@ -26,13 +34,7 @@ export default function UpdateProductModal({ product, updateProduct }) {
       return;
     }
 
-    const newProduct = {
-      name: form.name,
-      description: form.description,
-      stock: form.stock,
-    };
-
-    updateProduct(product._id, newProduct);
+    updateProduct(product._id, form);
     setErrorMsg(null);
 
     setOpen(false);
@@ -51,7 +53,30 @@ export default function UpdateProductModal({ product, updateProduct }) {
       setErrorMsg("Please enter a valid stock amount");
       return false;
     }
+    if (form.price === "" || form.price < 0) {
+      setErrorMsg("Please enter a valid price");
+      return false;
+    }
     return true;
+  };
+
+  const uploadFile = async (e) => {
+    console.log("Uploading...");
+    const files = e.target.files;
+    const data = new FormData();
+    data.append("file", files[0]);
+    data.append("upload_preset", "ecommerce");
+
+    const res = await fetch(
+      "https://api.cloudinary.com/v1_1/dgnjcfkk9/image/upload",
+      {
+        method: "POST",
+        body: data,
+      }
+    );
+
+    const file = await res.json();
+    setForm({ ...form, image: file.secure_url });
   };
 
   return (
@@ -63,6 +88,21 @@ export default function UpdateProductModal({ product, updateProduct }) {
       <Modal.Header>Update product</Modal.Header>
       <Modal.Content>
         <Form>
+          <Segment>
+            {form.image && (
+              <Image size="small" src={form.image} alt="Upload Preview" />
+            )}
+            <Form.Input
+              label="Product Image"
+              type="file"
+              id="file"
+              name="file"
+              placeholder="Upload Image"
+              required
+              onChange={uploadFile}
+            />
+          </Segment>
+
           <Form.Input
             label="Product Name"
             name="name"
@@ -76,6 +116,14 @@ export default function UpdateProductModal({ product, updateProduct }) {
             placeholder="Product Description"
             onChange={handleChange}
             value={form.description}
+          />
+          <Form.Input
+            label="Price (£)"
+            name="price"
+            onChange={handleChange}
+            type="number"
+            width="5"
+            value={form.price}
           />
           <Form.Input
             label="Stock"
