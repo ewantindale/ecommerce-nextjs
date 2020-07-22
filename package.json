@@ -1,5 +1,5 @@
 {
-  "name": "next-hello-world",
+  "name": "ecommerce-nextjs",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -8,8 +8,12 @@
     "start": "next start"
   },
   "dependencies": {
+    "mongoose": "^5.9.25",
     "next": "9.4.4",
     "react": "16.13.1",
-    "react-dom": "16.13.1"
+    "react-dom": "16.13.1",
+    "semantic-ui-css": "^2.4.1",
+    "semantic-ui-react": "^0.88.2",
+    "swr": "^0.2.3"
   }
 }
