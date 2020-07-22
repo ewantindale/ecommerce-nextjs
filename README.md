@@ -2,12 +2,28 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 ## Getting Started
 
-First, run the development server:
+Install dependencies
 
 ```bash
+
+npm install
+
+```
+
+Add your own .env file to connect to your Mongo database
+
+```bash
+
+MONGODB_URI=<Your mongoDB connection URI>
+
+```
+
+Run the development server:
+
+```bash
+
 npm run dev
-# or
-yarn dev
+
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
