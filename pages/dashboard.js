@@ -98,10 +98,8 @@ export default function Dashboard() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Header size="huge">Dashboard</Header>
-
       <AddProductModal addProduct={addProduct} />
       <Header size="huge">Products</Header>
-
       {data ? (
         <ProductList
           products={data.products}
@@ -113,10 +111,10 @@ export default function Dashboard() {
       ) : (
         <Loader active inline="centered" />
       )}
-
       <Link href="/api/auth/signout">
         <Button>Sign Out</Button>
       </Link>
+      test
     </Layout>
   );
 }
