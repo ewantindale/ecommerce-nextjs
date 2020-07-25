@@ -2,7 +2,7 @@ import NextAuth from "next-auth";
 import Providers from "next-auth/providers";
 
 const options = {
-  site: process.env.SITE || "http://localhost:3000",
+  site: process.env.SITE || "https://ecommerce-nextjs-xi.vercel.app/",
 
   // Configure one or more authentication providers
   providers: [
