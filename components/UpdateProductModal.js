@@ -16,6 +16,7 @@ export default function UpdateProductModal({ product, updateProduct }) {
     name: product.name,
     description: product.description,
     stock: product.stock,
+    price: product.price,
   });
 
   const handleOpen = () => setOpen(true);

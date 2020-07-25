@@ -1,12 +1,15 @@
 import Head from "next/head";
+import Link from "next/link";
 import Layout from "../components/Layout";
-import { Header, Loader } from "semantic-ui-react";
+import { Header, Loader, Button, Segment, Container } from "semantic-ui-react";
 import ProductList from "../components/ProductList";
 import useSWR, { mutate } from "swr";
 import fetcher from "../utils/fetcher";
 import AddProductModal from "../components/AddProductModal";
+import { useSession } from "next-auth/client";
 
 export default function Dashboard() {
+  const [session, loading] = useSession();
   const { data, error } = useSWR("/api/products", fetcher);
 
   const addProduct = async (product) => {
@@ -61,6 +64,33 @@ export default function Dashboard() {
     }
   };
 
+  if (loading)
+    return (
+      <Layout>
+        <Head>
+          <title>Dashboard</title>
+          <link rel="icon" href="/favicon.ico" />
+        </Head>
+        <Loader active inline="centered" />
+      </Layout>
+    );
+
+  if (!session)
+    return (
+      <Layout>
+        <Head>
+          <title>Dashboard</title>
+          <link rel="icon" href="/favicon.ico" />
+        </Head>
+        <Segment textAlign="center">
+          <Header>You must be signed in to access the Dashboard. </Header>
+          <Link href="/api/auth/signin">
+            <Button>Sign in</Button>
+          </Link>
+        </Segment>
+      </Layout>
+    );
+
   return (
     <Layout>
       <Head>
@@ -68,6 +98,7 @@ export default function Dashboard() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Header size="huge">Dashboard</Header>
+
       <AddProductModal addProduct={addProduct} />
       <Header size="huge">Products</Header>
 
@@ -82,6 +113,10 @@ export default function Dashboard() {
       ) : (
         <Loader active inline="centered" />
       )}
+
+      <Link href="/api/auth/signout">
+        <Button>Sign Out</Button>
+      </Link>
     </Layout>
   );
 }

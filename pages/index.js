@@ -11,6 +11,15 @@ export default function Dashboard() {
       </Head>
 
       <Header>Welcome to the ecommerce platform</Header>
+      <p>
+        Visit the Store page to view a list of products from a customers
+        perspective.
+      </p>
+      <p>
+        Authenticated users can add, update and remove products as an
+        administrator using the Dashboard.
+      </p>
+      <p>For now, authentication is just a GitHub sign in.</p>
     </Layout>
   );
 }

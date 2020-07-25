@@ -8,12 +8,15 @@ export default function Navigation() {
         <Menu.Item>
           <Header>ecommerce</Header>
         </Menu.Item>
+        <Menu.Item>
+          <Header></Header>
+        </Menu.Item>
         <Menu.Menu position="right">
           <Link href="/">
             <Menu.Item>Home</Menu.Item>
           </Link>
           <Link href="/products">
-            <Menu.Item>View Store</Menu.Item>
+            <Menu.Item>Store</Menu.Item>
           </Link>
           <Link href="/dashboard">
             <Menu.Item>Dashboard</Menu.Item>

@@ -33,16 +33,12 @@ function Products({ products }) {
                   <Card.Header>{product.name}</Card.Header>
                   <Card.Description>{product.description}</Card.Description>
                 </Card.Content>
-                <Card.Content textAlign="center">
-                  <Label
-                    basic
-                    size="large"
-                    color={product.stock > 0 ? "green" : "red"}
-                  >
-                    {product.stock > 0
-                      ? product.stock + " in stock"
-                      : "Out of stock"}
-                  </Label>
+                <Card.Content>
+                  {/* <Label basic size="large"> */}
+                  {product.stock > 0
+                    ? product.stock + " in stock"
+                    : "Out of stock"}
+                  {/* </Label> */}
                 </Card.Content>
                 <Card.Content extra textAlign="center">
                   <Button
